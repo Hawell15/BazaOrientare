@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  competition_name: MyString
+  date: 2022-03-14
+  location: MyString
+  country: MyString
+  distance_type: MyString
+
+two:
+  competition_name: MyString
+  date: 2022-03-14
+  location: MyString
+  country: MyString
+  distance_type: MyString
