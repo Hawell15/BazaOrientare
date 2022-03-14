@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  runner_name: MyString
+  surname: MyString
+  dob: 2022-03-14
+  category: one
+  club: one
+  gender: MyString
+  category_valid: 2022-03-14
+
+two:
+  runner_name: MyString
+  surname: MyString
+  dob: 2022-03-14
+  category: two
+  club: two
+  gender: MyString
+  category_valid: 2022-03-14
