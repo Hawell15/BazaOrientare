@@ -25,6 +25,6 @@ class HomeController < ApplicationController
     # make the browser
     browser = Watir::Browser.new :chrome, options: options
     browser.goto 'www.google.com'
-    @aaa = browser.text
+    @aaa = browser.text[0..-1]
   end
 end
