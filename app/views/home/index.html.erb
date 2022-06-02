@@ -1,3 +1,26 @@
 <h1>Home#index</h1>
 <p>Find me in app/views/home/index.html.erb</p>
 Hello World
+<br>
+
+<br>
+<select id="mySelect" onchange="myFunction()">
+  <option value="Audi">Audi</option>
+  <option value="BMW">BMW</option>
+  <option value="Mercedes">Mercedes</option>
+  <option value="Volvo">Volvo</option>
+</select>
+<p>When you select a new car, a function is triggered which outputs the value of the selected car.</p>
+
+<p id="demo2"><%= @aaa%></p>
+<p id="demo"></p>
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("demo2").value;
+  document.getElementById("demo").innerHTML = "You selected: " + x;
+}
+</script>
+
+<p> current_user
