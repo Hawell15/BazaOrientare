@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :runners
   resources :clubs
   resources :categories
+  get 'home/wredata'
 
   root to: 'home#index'
 

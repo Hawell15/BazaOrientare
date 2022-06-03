@@ -1,5 +1,5 @@
 class RunnersController < ApplicationController
-  before_action :set_runner, only: %i[ show edit update destroy ]
+  before_action :set_runner, only: %i[ show edit update destroy wredata]
 
   # GET /runners or /runners.json
   def index
@@ -60,11 +60,17 @@ class RunnersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_runner
-      @runner = Runner.find(params[:id])
+      @runner = Runner.find(params[:id]) rescue "1"
     end
 
     # Only allow a list of trusted parameters through.
     def runner_params
       params.require(:runner).permit(:runner_name, :surname, :dob, :category_id, :club_id, :gender, :category_valid)
     end
+
+    def persons(browser)
+      browser.links(href: /PersonView/).map do |link|
+      link.href[/\d+/]
+    end
+  end
 end
