@@ -46,7 +46,7 @@ class HomeController < ApplicationController
   def wre_results
     @results_count = 0
     runners = Runner.where.not(wre_id: nil)
-    browser = Watir::Browser.new :chrome
+    browser = Watir::Browser.new :chrome, headless: true
     runners.each do |runner|
       browser.goto "https://ranking.orienteering.org/PersonView?person=#{runner[:wre_id]}"
       browser.table(class: "ranktable").wait_until(&:present?)
