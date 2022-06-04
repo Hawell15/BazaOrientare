@@ -8,6 +8,11 @@ Rails.application.routes.draw do
   resources :clubs
   resources :categories
   get 'home/wredata'
+  get 'home/wre_id'
+  get 'home/wre_results'
+  get 'home/wredata'
+
+
 
   root to: 'home#index'
 

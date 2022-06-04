@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_14_201119) do
+ActiveRecord::Schema[7.0].define(version: 2022_06_04_104524) do
   create_table "categories", force: :cascade do |t|
     t.string "category_name"
     t.string "full_name"
@@ -37,6 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_14_201119) do
     t.string "distance_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "wre_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -57,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_14_201119) do
     t.integer "group_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "wre_points"
     t.index ["category_id"], name: "index_results_on_category_id"
     t.index ["group_id"], name: "index_results_on_group_id"
     t.index ["runner_id"], name: "index_results_on_runner_id"
@@ -72,6 +74,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_14_201119) do
     t.date "category_valid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "wre_id"
+    t.integer "sprint_wre_ranking"
+    t.integer "forest_wre_ranking"
     t.index ["category_id"], name: "index_runners_on_category_id"
     t.index ["club_id"], name: "index_runners_on_club_id"
   end
