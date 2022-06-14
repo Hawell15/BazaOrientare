@@ -43,31 +43,17 @@ class HomeController < ApplicationController
     render json: { new_ids: new_ids, exist_ids: exist_ids, new_runner_ids: new_runner_ids}
   end
 
-  def wre_results
+  def wre_results_men
     @results_count = 0
-    runners = Runner.where.not(wre_id: nil)
-    browser = Watir::Browser.new :chrome, headless: true
-    runners.each do |runner|
-      browser.goto "https://ranking.orienteering.org/PersonView?person=#{runner[:wre_id]}"
-      browser.table(class: "ranktable").wait_until(&:present?)
-      html = Nokogiri::HTML(browser.html)
-      # name ="#{html.at_css("span#MainContent_RunnerDetails_Label1").text} #{html.at_css("span#MainContent_RunnerDetails_Label3").text}"
-      runner.update(
-        forest_wre_ranking: html.at_css("a.list-group-item:not(:contains('Sprint')) span")&.text.to_i,
-        sprint_wre_ranking: html.at_css("a.list-group-item:contains('Sprint') span")&.text.to_i
-      )
-      parse_results(html, runner)
+    runners = Runner.where(gender: "M").where.not(wre_id: nil)
+    get_results(runners)
+    render json: { competitions: @results_count}
+  end
 
-      next unless browser.link(href: "#list", text: /Sprint/).present?
-
-      browser.link(href: "#list", text: /Sprint/).click
-      browser.table(class: "ranktable", text:/Sprint/).wait_until(&:present?)
-      html = Nokogiri::HTML(browser.html)
-      parse_results(html, runner, "Sprint")
-    end
-
-    browser.close
-
+  def wre_results_women
+    @results_count = 0
+    runners = Runner.where(gender: "F").where.not(wre_id: nil)
+    get_results(runners)
     render json: { competitions: @results_count}
   end
 
@@ -141,5 +127,29 @@ class HomeController < ApplicationController
       @results_count += 1
       Result.create(group: group, runner: runner, place: data[:place], time: data[:time], category_id: category_id, wre_points: data[:points] )
     end
+  end
+
+  def get_results(runners)
+    browser = Watir::Browser.new :chrome, headless: true
+    runners.each do |runner|
+      browser.goto "https://ranking.orienteering.org/PersonView?person=#{runner[:wre_id]}"
+      browser.table(class: "ranktable").wait_until(&:present?)
+      html = Nokogiri::HTML(browser.html)
+      # name ="#{html.at_css("span#MainContent_RunnerDetails_Label1").text} #{html.at_css("span#MainContent_RunnerDetails_Label3").text}"
+      runner.update(
+        forest_wre_ranking: html.at_css("a.list-group-item:not(:contains('Sprint')) span")&.text.to_i,
+        sprint_wre_ranking: html.at_css("a.list-group-item:contains('Sprint') span")&.text.to_i
+      )
+      parse_results(html, runner)
+
+      next unless browser.link(href: "#list", text: /Sprint/).present?
+
+      browser.link(href: "#list", text: /Sprint/).click
+      browser.table(class: "ranktable", text:/Sprint/).wait_until(&:present?)
+      html = Nokogiri::HTML(browser.html)
+      parse_results(html, runner, "Sprint")
+    end
+
+    browser.close
   end
 end

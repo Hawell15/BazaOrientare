@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   resources :categories
   get 'home/wredata'
   get 'home/wre_id'
-  get 'home/wre_results'
+  get 'home/wre_results_men'
+  get 'home/wre_results_women'
   get 'home/wredata'
 
 
