@@ -53,10 +53,13 @@ class HomeController < ApplicationController
       html = Nokogiri::HTML(browser.html)
       # name ="#{html.at_css("span#MainContent_RunnerDetails_Label1").text} #{html.at_css("span#MainContent_RunnerDetails_Label3").text}"
       runner.update(
-        forest_wre_ranking: html.at_css("span.badge-rank").text.to_i,
-        sprint_wre_ranking: html.css("span.badge-rank").last.text.to_i
+        forest_wre_ranking: html.at_css("a.list-group-item:not(:contains('Sprint')) span")&.text.to_i,
+        sprint_wre_ranking: html.at_css("a.list-group-item:contains('Sprint') span")&.text.to_i
       )
       parse_results(html, runner)
+
+      next unless browser.link(href: "#list", text: /Sprint/).present?
+
       browser.link(href: "#list", text: /Sprint/).click
       browser.table(class: "ranktable", text:/Sprint/).wait_until(&:present?)
       html = Nokogiri::HTML(browser.html)
